@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.MainViewController"
+      styleClass="root-pane">
+
+    <!-- ==================== ЛЕВАЯ ПАНЕЛЬ: БИБЛИОТЕКА (теги) ==================== -->
+    <VBox styleClass="sidebar" prefWidth="220" minWidth="200" maxWidth="220">
+        <padding>
+            <Insets top="18" right="14" bottom="14" left="18"/>
+        </padding>
+
+        <HBox styleClass="logo-box" spacing="6">
+            <Label text="●" styleClass="logo-dot"/>
+            <Label text="TakeNote" styleClass="app-title"/>
+        </HBox>
+
+        <TextField fx:id="sidebarSearchField" promptText="Поиск" styleClass="sidebar-search">
+            <VBox.margin>
+                <Insets top="14" bottom="18"/>
+            </VBox.margin>
+        </TextField>
+
+        <Label text="БИБЛИОТЕКА" styleClass="section-label"/>
+
+        <ListView fx:id="libraryListView" styleClass="library-list" VBox.vgrow="SOMETIMES">
+            <VBox.margin>
+                <Insets top="6" bottom="12"/>
+            </VBox.margin>
+        </ListView>
+
+        <Region VBox.vgrow="ALWAYS"/>
+
+        <Label text="ХРАНИЛИЩЕ" styleClass="section-label"/>
+        <Label text="PostgreSQL" styleClass="storage-item">
+            <VBox.margin>
+                <Insets top="6" bottom="14"/>
+            </VBox.margin>
+        </Label>
+
+        <Label fx:id="footerStatusLabel" text="—" styleClass="footer-status" wrapText="true"/>
+    </VBox>
+
+    <!-- ==================== СРЕДНЯЯ ПАНЕЛЬ: СПИСОК ЗАМЕТОК ==================== -->
+    <VBox styleClass="list-pane" prefWidth="300" minWidth="240" maxWidth="300">
+        <padding>
+            <Insets top="18" right="14" bottom="14" left="14"/>
+        </padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="8">
+            <Label fx:id="listHeaderTitle" text="Все заметки" styleClass="list-header-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="newNoteButton" text="+" styleClass="new-note-button"/>
+        </HBox>
+
+        <TextField fx:id="listSearchField" promptText="Поиск по заметкам" styleClass="list-search">
+            <VBox.margin>
+                <Insets top="12" bottom="10"/>
+            </VBox.margin>
+        </TextField>
+
+        <ListView fx:id="notesListView" styleClass="notes-list" VBox.vgrow="ALWAYS"/>
+    </VBox>
+
+    <!-- ==================== ПРАВАЯ ПАНЕЛЬ: ЧТЕНИЕ / РЕДАКТИРОВАНИЕ ==================== -->
+    <StackPane styleClass="detail-wrapper" HBox.hgrow="ALWAYS">
+
+        <VBox fx:id="emptyStatePane" styleClass="empty-state" alignment="CENTER" spacing="8">
+            <Label text="Заметка не выбрана" styleClass="empty-state-title"/>
+            <Label text="Выберите заметку слева или создайте новую" styleClass="empty-state-subtitle"/>
+        </VBox>
+
+        <VBox fx:id="detailPane" styleClass="detail-pane" visible="false">
+            <padding>
+                <Insets top="16" right="28" bottom="18" left="28"/>
+            </padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label fx:id="breadcrumbLabel" text="Все заметки" styleClass="breadcrumb"/>
+            </HBox>
+
+            <TextField fx:id="titleField" promptText="Заголовок заметки" styleClass="note-title-field">
+                <VBox.margin>
+                    <Insets top="14" bottom="2"/>
+                </VBox.margin>
+            </TextField>
+
+            <Label fx:id="metaLabel" text="" styleClass="meta-label"/>
+
+            <Label fx:id="tagsLabel" text="" styleClass="tags-label" wrapText="true">
+                <VBox.margin>
+                    <Insets top="4" bottom="10"/>
+                </VBox.margin>
+            </Label>
+
+            <HBox fx:id="formattingToolbar" spacing="4" visible="false" managed="false" styleClass="formatting-toolbar">
+                <Button fx:id="boldButton" text="Ж" styleClass="format-button" focusTraversable="false"/>
+                <Button fx:id="codeButton" text="&lt;/&gt;" styleClass="format-button" focusTraversable="false"/>
+                <Button fx:id="bulletButton" text="•" styleClass="format-button" focusTraversable="false"/>
+                <Button fx:id="headingButton" text="H" styleClass="format-button" focusTraversable="false"/>
+                <VBox.margin>
+                    <Insets top="6" bottom="2"/>
+                </VBox.margin>
+            </HBox>
+
+            <StackPane fx:id="contentStack" VBox.vgrow="ALWAYS" styleClass="content-stack">
+                <ScrollPane fx:id="contentPreviewScroll" fitToWidth="true" styleClass="content-scroll">
+                    <content>
+                        <VBox fx:id="contentPreviewHolder"/>
+                    </content>
+                </ScrollPane>
+                <TextArea fx:id="contentEditor" wrapText="true" styleClass="content-editor" visible="false"/>
+            </StackPane>
+        </VBox>
+    </StackPane>
+
+</HBox>
